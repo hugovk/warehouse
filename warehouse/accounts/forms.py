@@ -31,7 +31,7 @@ class UsernameMixin:
 
         if userid is None:
             raise wtforms.validators.ValidationError(
-                "No user found with that username."
+                "No user found with that username"
             )
 
 
@@ -43,8 +43,7 @@ class NewUsernameMixin:
             wtforms.validators.Length(
                 max=50,
                 message=(
-                    "The username you have chosen is too long. Please choose "
-                    "a username with under 50 characters."
+                    "Please choose a username with 50 characters or fewer"
                 )
             ),
             # the regexp below must match the CheckConstraint
@@ -84,7 +83,7 @@ class PasswordMixin:
             try:
                 if not self.user_service.check_password(userid, field.data):
                     raise wtforms.validators.ValidationError(
-                        "The password you have provided is invalid. Please "
+                        "The password you provided is invalid. Please "
                         "try again."
                     )
             except TooManyFailedLogins:
@@ -110,7 +109,7 @@ class NewPasswordMixin:
             wtforms.validators.DataRequired(),
             wtforms.validators.EqualTo(
                 "new_password",
-                "Your passwords do not match. Please try again."
+                "Your passwords don't match. Please try again."
             ),
         ],
     )
@@ -134,8 +133,8 @@ class NewEmailMixin:
             wtforms.validators.DataRequired(),
             wtforms.validators.Email(
                 message=(
-                    "The email address you have chosen is not a valid "
-                    "format. Please try again."
+                    "The email address you've chosen isn't valid. "
+                    "Please try again."
                 )
             ),
         ],
@@ -150,7 +149,7 @@ class NewEmailMixin:
         domain = field.data.split('@')[-1]
         if domain in disposable_email_domains.blacklist:
             raise wtforms.validators.ValidationError(
-                "Sorry, you cannot create an account with an email address "
+                "You can't create an account with an email address "
                 "from this domain. Please use a different email."
             )
 

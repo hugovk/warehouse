@@ -162,22 +162,22 @@ def _validate_pep440_version(form, field):
     # Check that this version is a valid PEP 440 version at all.
     if not isinstance(parsed, packaging.version.Version):
         raise wtforms.validators.ValidationError(
-            "Must start and end with a letter or numeral and contain only "
-            "ascii numeric and '.', '_' and '-'."
+            "Start and end with a letter or numeral containing only "
+            "ASCII numeric and '.', '_' and '-'"
         )
 
     # Check that this version does not have a PEP 440 local segment attached
     # to it.
     if parsed.local is not None:
         raise wtforms.validators.ValidationError(
-            "Cannot use PEP 440 local versions."
+            "Can't use PEP 440 local versions"
         )
 
 
 def _parse_legacy_requirement(requirement):
     parsed = _legacy_specifier_re.search(requirement)
     if parsed is None:
-        raise ValueError("Invalid Requirement.")
+        raise ValueError("Invalid requirement")
     return parsed.groupdict()["name"], parsed.groupdict()["specifier"]
 
 
@@ -186,7 +186,7 @@ def _validate_pep440_specifier(specifier):
         packaging.specifiers.SpecifierSet(specifier)
     except packaging.specifiers.InvalidSpecifier:
         raise wtforms.validators.ValidationError(
-            "Invalid specifier in requirement."
+            "Invalid specifier in requirement"
         ) from None
 
 
@@ -204,12 +204,12 @@ def _validate_legacy_non_dist_req(requirement):
 
     if req.url is not None:
         raise wtforms.validators.ValidationError(
-            "Cannot use direct dependency: {!r}".format(requirement)
+            "Can't use direct dependency: {!r}".format(requirement)
         )
 
     if not req.name.isalnum() or req.name[0].isdigit():
         raise wtforms.validators.ValidationError(
-            "Must be a valid Python identifier."
+            "Use a valid Python identifier"
         )
 
 
@@ -223,12 +223,12 @@ def _validate_legacy_dist_req(requirement):
         req = packaging.requirements.Requirement(requirement)
     except packaging.requirements.InvalidRequirement:
         raise wtforms.validators.ValidationError(
-            "Invalid requirement: {!r}.".format(requirement)
+            "Invalid requirement: {!r}".format(requirement)
         ) from None
 
     if req.url is not None:
         raise wtforms.validators.ValidationError(
-            "Cannot have direct dependency: {!r}".format(requirement)
+            "Can't have direct dependency: {!r}".format(requirement)
         )
 
 
@@ -255,22 +255,22 @@ def _validate_project_url(value):
         label, url = value.split(", ", 1)
     except ValueError:
         raise wtforms.validators.ValidationError(
-            "Must have both a label and an URL.",
+            "Use both a label and an URL",
         ) from None
 
     if not label:
-        raise wtforms.validators.ValidationError("Must have a label.")
+        raise wtforms.validators.ValidationError("Use a label")
 
     if len(label) > 32:
         raise wtforms.validators.ValidationError(
-            "Label must not be longer than 32 characters."
+            "Use 32 characters or fewer"
         )
 
     if not url:
-        raise wtforms.validators.ValidationError("Must have an URL.")
+        raise wtforms.validators.ValidationError("Use an URL")
 
     if not http.is_valid_uri(url, require_authority=False):
-        raise wtforms.validators.ValidationError("Invalid URL.")
+        raise wtforms.validators.ValidationError("Use valid URL")
 
 
 def _validate_project_url_list(form, field):
@@ -279,7 +279,8 @@ def _validate_project_url_list(form, field):
 
 
 def _validate_rfc822_email_field(form, field):
-    email_validator = wtforms.validators.Email(message='Invalid email address')
+    email_validator = wtforms.validators.Email(
+        message='Use valid email address')
     addresses = email.utils.getaddresses([field.data])
 
     for real_name, address in addresses:
@@ -294,17 +295,17 @@ def _validate_description_content_type(form, field):
 
     content_type, parameters = parse_header(field.data)
     if content_type not in _valid_description_content_types:
-        _raise("type/subtype is not valid")
+        _raise("Use valid type/subtype")
 
     charset = parameters.get('charset')
     if charset and charset != 'UTF-8':
-        _raise("charset is not valid")
+        _raise("Use valid charset")
 
     variant = parameters.get('variant')
     if (content_type == 'text/markdown' and variant and
             variant not in _valid_markdown_variants):
         _raise(
-            "variant is not valid, expected one of {}".format(
+            "Use valid variant, expected one of {}".format(
                 ', '.join(_valid_markdown_variants)))
 
 
@@ -349,8 +350,8 @@ class MetadataForm(forms.Form):
                 _project_name_re,
                 re.IGNORECASE,
                 message=(
-                    "Must start and end with a letter or numeral and contain "
-                    "only ascii numeric and '.', '_' and '-'."
+                    "Start and end with a letter or numeral containing "
+                    "only ASCII numeric and '.', '_' and '-'"
                 ),
             ),
         ],
@@ -361,7 +362,7 @@ class MetadataForm(forms.Form):
             wtforms.validators.DataRequired(),
             wtforms.validators.Regexp(
                 r"^(?!\s).*(?<!\s)$",
-                message="Cannot have leading or trailing whitespace.",
+                message="Can't have leading or trailing whitespace",
             ),
             _validate_pep440_version,
         ],
@@ -375,7 +376,7 @@ class MetadataForm(forms.Form):
             wtforms.validators.Length(max=512),
             wtforms.validators.Regexp(
                 r"^.+$",  # Rely on the fact that . doesn't match a newline.
-                message="Multiple lines are not allowed.",
+                message="Use single line only",
             )
         ],
     )
@@ -465,7 +466,7 @@ class MetadataForm(forms.Form):
                     "bdist_dmg", "bdist_dumb", "bdist_egg", "bdist_msi",
                     "bdist_rpm", "bdist_wheel", "bdist_wininst", "sdist",
                 ],
-                message="Unknown type of file.",
+                message="Use known type of file",
             ),
         ]
     )
@@ -483,7 +484,7 @@ class MetadataForm(forms.Form):
             wtforms.validators.Regexp(
                 r"^[A-F0-9]{64}$",
                 re.IGNORECASE,
-                message="Must be a valid, hex encoded, SHA256 message digest.",
+                message="Use be a valid, hex-encoded, SHA256 message digest",
             ),
         ],
     )
@@ -493,7 +494,7 @@ class MetadataForm(forms.Form):
             wtforms.validators.Regexp(
                 r"^[A-F0-9]{64}$",
                 re.IGNORECASE,
-                message="Must be a valid, hex encoded, blake2 message digest.",
+                message="Use be a valid, hex-encoded, BLAKE2 message digest",
             ),
         ],
     )
@@ -562,7 +563,7 @@ class MetadataForm(forms.Form):
         if (self.filetype.data and
                 self.filetype.data != "sdist" and not self.pyversion.data):
             raise wtforms.validators.ValidationError(
-                "Python version is required for binary distribution uploads."
+                "Include Python version for binary distribution uploads"
             )
 
         # All source releases *must* have a pyversion of "source"
@@ -571,13 +572,13 @@ class MetadataForm(forms.Form):
                 self.pyversion.data = "source"
             elif self.pyversion.data != "source":
                 raise wtforms.validators.ValidationError(
-                    "The only valid Python version for a sdist is 'source'."
+                    "Use 'source' as Python version for an sdist"
                 )
 
         # We *must* have at least one digest to verify against.
         if not self.md5_digest.data and not self.sha256_digest.data:
             raise wtforms.validators.ValidationError(
-                "Must include at least one message digest.",
+                "Include at least one message digest",
             )
 
 
@@ -707,7 +708,7 @@ def file_upload(request):
     if request.flags.enabled('read-only'):
         raise _exc_with_message(
             HTTPForbidden,
-            'Read Only Mode: Uploads are temporarily disabled',
+            'Read-only mode: Uploads are temporarily disabled',
         )
 
     # Before we do anything, if there isn't an authenticated user with this
@@ -715,7 +716,7 @@ def file_upload(request):
     if request.authenticated_userid is None:
         raise _exc_with_message(
             HTTPForbidden,
-            "Invalid or non-existent authentication information.",
+            "Invalid or non-existent authentication information",
         )
 
     # Do some cleanup of the various form fields
@@ -736,7 +737,7 @@ def file_upload(request):
     # We require protocol_version 1, it's the only supported version however
     # passing a different version should raise an error.
     if request.POST.get("protocol_version", "1") != "1":
-        raise _exc_with_message(HTTPBadRequest, "Unknown protocol version.")
+        raise _exc_with_message(HTTPBadRequest, "Unknown protocol version")
 
     # Check if any fields were supplied as a tuple and have become a
     # FieldStorage. The 'content' and 'gpg_signature' fields _should_ be a
@@ -748,7 +749,7 @@ def file_upload(request):
         if any(isinstance(value, FieldStorage) for value in values):
             raise _exc_with_message(
                 HTTPBadRequest,
-                f"{field}: Should not be a tuple.",
+                f"{field}: Should not be a tuple",
             )
 
     # Look up all of the valid classifiers
@@ -797,7 +798,7 @@ def file_upload(request):
     if "content" not in request.POST:
         raise _exc_with_message(
             HTTPBadRequest,
-            "Upload payload does not have a file.",
+            "Upload payload does not have a file",
         )
 
     # Look up the project first before doing anything else, this is so we can
@@ -817,8 +818,8 @@ def file_upload(request):
         if request.flags.enabled('disallow-new-project-registration'):
             raise _exc_with_message(
                 HTTPForbidden,
-                ("New Project Registration Temporarily Disabled "
-                 "See {projecthelp} for details")
+                ("New project registration temporarily disabled. "
+                 "See {projecthelp} for details.")
                 .format(
                     projecthelp=request.route_url(
                         'help', _anchor='admin-intervention')),
@@ -849,7 +850,7 @@ def file_upload(request):
                 func.normalize_pep426_name(form.name.data))).scalar():
             raise _exc_with_message(
                 HTTPBadRequest,
-                ("The name {name!r} is not allowed. "
+                ("The name {name!r} isn't allowed. "
                  "See {projecthelp} "
                  "for more information.").format(
                     name=form.name.data,
@@ -862,7 +863,7 @@ def file_upload(request):
                 STDLIB_PROHIBITTED):
             raise _exc_with_message(
                 HTTPBadRequest,
-                ("The name {name!r} is not allowed (conflict with Python "
+                ("The name {name!r} isn't allowed (conflict with Python "
                  "Standard Library module name). See "
                  "{projecthelp} for more information.").format(
                      name=form.name.data,
@@ -903,7 +904,7 @@ def file_upload(request):
     if not request.has_permission("upload", project):
         raise _exc_with_message(
             HTTPForbidden,
-            ("The user '{0}' is not allowed to upload to project '{1}'. "
+            ("The user '{0}' isn't allowed to upload to project '{1}'. "
              "See {2} for more information.")
             .format(request.user.username, project.name, request.route_url(
                 'help', _anchor='project-name')
@@ -1010,15 +1011,15 @@ def file_upload(request):
     if "/" in filename or "\\" in filename:
         raise _exc_with_message(
             HTTPBadRequest,
-            "Cannot upload a file with '/' or '\\' in the name.",
+            "Cannot upload a file with '/' or '\\' in the name",
         )
 
     # Make sure the filename ends with an allowed extension.
     if _dist_file_regexes[project.allow_legacy_files].search(filename) is None:
         raise _exc_with_message(
             HTTPBadRequest,
-            "Invalid file extension. PEP 527 requires one of: .egg, .tar.gz, "
-            ".whl, .zip (https://www.python.org/dev/peps/pep-0527/)."
+            "Use a .egg, .tar.gz, .whl or .zip extension "
+            "(PEP 527: https://www.python.org/dev/peps/pep-0527/)"
         )
 
     # Make sure that our filename matches the project that it is being uploaded
@@ -1027,7 +1028,7 @@ def file_upload(request):
     if not pkg_resources.safe_name(filename).lower().startswith(prefix):
         raise _exc_with_message(
             HTTPBadRequest,
-            "The filename for {!r} must start with {!r}.".format(
+            "Start filename for {!r} with {!r}".format(
                 project.name,
                 prefix,
             )
@@ -1036,14 +1037,14 @@ def file_upload(request):
     # Check the content type of what is being uploaded
     if (not request.POST["content"].type or
             request.POST["content"].type.startswith("image/")):
-        raise _exc_with_message(HTTPBadRequest, "Invalid distribution file.")
+        raise _exc_with_message(HTTPBadRequest, "Invalid distribution file")
 
     # Ensure that the package filetype is allowed.
     # TODO: Once PEP 527 is completely implemented we should be able to delete
     #       this and just move it into the form itself.
     if (not project.allow_legacy_files and
             form.filetype.data not in {"sdist", "bdist_wheel", "bdist_egg"}):
-        raise _exc_with_message(HTTPBadRequest, "Unknown type of file.")
+        raise _exc_with_message(HTTPBadRequest, "Unknown type of file")
 
     # The project may or may not have a file size specified on the project, if
     # it does then it may or may not be smaller or larger than our global file
@@ -1069,7 +1070,7 @@ def file_upload(request):
                     raise _exc_with_message(
                         HTTPBadRequest,
                         "File too large. " +
-                        "Limit for project {name!r} is {limit}MB. ".format(
+                        "Limit for project {name!r} is {limit} MB. ".format(
                             name=project.name,
                             limit=file_size_limit // (1024 * 1024)) +
                         "See " +
@@ -1101,7 +1102,7 @@ def file_upload(request):
         ]):
             raise _exc_with_message(
                 HTTPBadRequest,
-                "The digest supplied does not match a digest calculated "
+                "The digest doesn't match a digest calculated "
                 "from the uploaded file."
             )
 
@@ -1130,7 +1131,7 @@ def file_upload(request):
                           .exists()).scalar()):
             raise _exc_with_message(
                 HTTPBadRequest,
-                "This filename has previously been used, you should use a "
+                "This filename has already been used, use a "
                 "different version. "
                 "See " + request.route_url(
                     'help', _anchor='file-name-reuse'
@@ -1147,14 +1148,14 @@ def file_upload(request):
                               .exists()).scalar()):
             raise _exc_with_message(
                 HTTPBadRequest,
-                "Only one sdist may be uploaded per release.",
+                "Only one sdist may be uploaded per release",
             )
 
         # Check the file to make sure it is a valid distribution file.
         if not _is_valid_dist_file(temporary_filename, form.filetype.data):
             raise _exc_with_message(
                 HTTPBadRequest,
-                "Invalid distribution file.",
+                "Invalid distribution file",
             )
 
         # Check that if it's a binary wheel, it's on a supported platform
@@ -1166,7 +1167,7 @@ def file_upload(request):
                     raise _exc_with_message(
                         HTTPBadRequest,
                         "Binary wheel '{filename}' has an unsupported "
-                        "platform tag '{plat}'."
+                        "platform tag '{plat}'"
                         .format(filename=filename, plat=plat)
                     )
 
@@ -1182,7 +1183,7 @@ def file_upload(request):
                     if signature_size > MAX_SIGSIZE:
                         raise _exc_with_message(
                             HTTPBadRequest,
-                            "Signature too large.",
+                            "Signature too large",
                         )
                     fp.write(chunk)
 
@@ -1191,7 +1192,7 @@ def file_upload(request):
                 if not fp.read().startswith(b"-----BEGIN PGP SIGNATURE-----"):
                     raise _exc_with_message(
                         HTTPBadRequest,
-                        "PGP signature is not ASCII armored.",
+                        "PGP signature is not ASCII armored",
                     )
         else:
             has_signature = False
@@ -1301,8 +1302,8 @@ def _legacy_purge(status, *args, **kwargs):
 def submit(request):
     return _exc_with_message(
         HTTPGone,
-        ("Project pre-registration is no longer required or supported, so "
-         "continue directly to uploading files."),
+        ("Project pre-registration is no longer required or supported, please "
+         "upload your files"),
     )
 
 
@@ -1315,5 +1316,5 @@ def doc_upload(request):
     return _exc_with_message(
         HTTPGone,
         "Uploading documentation is no longer supported, we recommend using "
-        "https://readthedocs.org/.",
+        "https://readthedocs.org",
     )
