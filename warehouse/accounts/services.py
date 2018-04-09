@@ -113,7 +113,7 @@ class DatabaseUserService:
         # global rate limit or not, assuming that we've been configured with a
         # global rate limiter anyways.
         if not self.ratelimiters["global"].test():
-            logger.warning("Global failed login threshold reached.")
+            logger.warning("Global failed login threshold reached")
             raise TooManyFailedLogins(
                 resets_in=self.ratelimiters["global"].resets_in(),
             )

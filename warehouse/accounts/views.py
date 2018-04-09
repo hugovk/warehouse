@@ -311,34 +311,34 @@ def reset_password(request, _form_class=ResetPasswordForm):
         token = request.params.get('token')
         data = token_service.loads(token)
     except TokenExpired:
-        return _error("Expired token - Request a new password reset link")
+        return _error("Expired token: request a new password reset link")
     except TokenInvalid:
-        return _error("Invalid token - Request a new password reset link")
+        return _error("Invalid token: request a new password reset link")
     except TokenMissing:
-        return _error("Invalid token - No token supplied")
+        return _error("Invalid token: no token supplied")
 
     # Check whether this token is being used correctly
     if data.get('action') != "password-reset":
-        return _error("Invalid token - Not a password reset token")
+        return _error("Invalid token: not a password reset token")
 
     # Check whether a user with the given user ID exists
     user = user_service.get_user(uuid.UUID(data.get("user.id")))
     if user is None:
-        return _error("Invalid token - User not found")
+        return _error("Invalid token: user not found")
 
     # Check whether the user has logged in since the token was created
     last_login = data.get("user.last_login")
     if str(user.last_login) > last_login:
         # TODO: track and audit this, seems alertable
         return _error(
-            "Invalid token - User has logged in since this token was requested"
+            "Invalid token: user has logged in since this token was requested"
         )
 
     # Check whether the password has been changed since the token was created
     password_date = data.get("user.password_date")
     if str(user.password_date) > password_date:
         return _error(
-            "Invalid token - Password has already been changed since this "
+            "Invalid token: password has already been changed since this "
             "token was requested"
         )
 
@@ -356,7 +356,7 @@ def reset_password(request, _form_class=ResetPasswordForm):
 
         # Flash a success message
         request.session.flash(
-            "You have successfully reset your password", queue="success"
+            "You have reset your password", queue="success"
         )
 
         # Perform login just after reset password and redirect to default view.
@@ -384,15 +384,15 @@ def verify_email(request):
         token = request.params.get('token')
         data = token_service.loads(token)
     except TokenExpired:
-        return _error("Expired token - Request a new verification link")
+        return _error("Expired token: request a new verification link")
     except TokenInvalid:
-        return _error("Invalid token - Request a new verification link")
+        return _error("Invalid token: request a new verification link")
     except TokenMissing:
-        return _error("Invalid token - No token supplied")
+        return _error("Invalid token: no token supplied")
 
     # Check whether this token is being used correctly
     if data.get('action') != "email-verify":
-        return _error("Invalid token - Not an email verification token")
+        return _error("Invalid token: not an email verification token")
 
     try:
         email = (
