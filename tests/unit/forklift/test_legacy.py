@@ -800,7 +800,7 @@ class TestFileUpload:
                     "version": "dog",
                 },
                 "'dog' is an invalid value for Version. "
-                "Error: start and end with a letter or numeral containing "
+                "Error: Start and end with a letter or numeral containing "
                 "only ASCII numeric and '.', '_' and '-'. "
                 "See "
                 "https://packaging.python.org/specifications/core-metadata",
@@ -834,7 +834,7 @@ class TestFileUpload:
                     "pyversion": "1.0",
                     "md5_digest": "bad",
                 },
-                "Invalid value for filetype. Error: Unknown type of file",
+                "Invalid value for filetype. Error: Use known type of file",
             ),
             (
                 {
