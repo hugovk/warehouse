@@ -205,7 +205,7 @@ class TestRegistrationForm:
         assert not form.validate()
         assert (
             form.email.errors.pop() ==
-            "The email address you have chosen is not a valid format. "
+            "The email address you've chosen isn't valid. "
             "Please try again."
         )
 

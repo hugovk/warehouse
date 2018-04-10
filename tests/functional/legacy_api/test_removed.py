@@ -18,17 +18,17 @@ def test_removed_upload_apis(webtest, action):
     resp = webtest.post("/legacy/?:action={}".format(action), status=410)
     assert resp.status == \
         ("410 Project pre-registration is no longer required or supported, so "
-         "continue directly to uploading files.")
+         "continue directly to uploading files")
 
 
 def test_remove_doc_upload(webtest):
     resp = webtest.post("/legacy/?:action=doc_upload", status=410)
     assert resp.status == (
         "410 Uploading documentation is no longer supported, we recommend "
-        "using https://readthedocs.org/."
+        "using https://readthedocs.org"
     )
 
 
 def test_doap(webtest):
     resp = webtest.get("/pypi?:action=doap&name=foo&version=1.0", status=410)
-    assert resp.status == "410 DOAP is no longer supported."
+    assert resp.status == "410 DOAP is no longer supported"

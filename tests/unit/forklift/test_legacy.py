@@ -3031,7 +3031,7 @@ def test_submit(pyramid_request):
     assert resp.status_code == 410
     assert resp.status == \
         ("410 Project pre-registration is no longer required or supported, so "
-         "continue directly to uploading files.")
+         "continue directly to uploading files")
 
 
 def test_doc_upload(pyramid_request):
@@ -3040,5 +3040,5 @@ def test_doc_upload(pyramid_request):
     assert resp.status_code == 410
     assert resp.status == (
         "410 Uploading documentation is no longer supported, we recommend "
-        "using https://readthedocs.org/."
+        "using https://readthedocs.org"
     )
