@@ -757,14 +757,14 @@ class TestFileUpload:
                 {},
                 "None is an invalid value for Metadata-Version. "
                 "Error: This field is required. "
-                "see "
+                "See "
                 "https://packaging.python.org/specifications/core-metadata",
             ),
             (
                 {"metadata_version": "-1"},
                 "'-1' is an invalid value for Metadata-Version. "
                 "Error: Unknown Metadata Version "
-                "see "
+                "See "
                 "https://packaging.python.org/specifications/core-metadata",
             ),
 
@@ -773,7 +773,7 @@ class TestFileUpload:
                 {"metadata_version": "1.2"},
                 "'' is an invalid value for Name. "
                 "Error: This field is required. "
-                "see "
+                "See "
                 "https://packaging.python.org/specifications/core-metadata",
             ),
             (
@@ -781,7 +781,7 @@ class TestFileUpload:
                 "'foo-' is an invalid value for Name. "
                 "Error: Start and end with a letter or numeral containing "
                 "only ASCII numeric and '.', '_' and '-'. "
-                "see "
+                "See "
                 "https://packaging.python.org/specifications/core-metadata",
             ),
 
@@ -790,7 +790,7 @@ class TestFileUpload:
                 {"metadata_version": "1.2", "name": "example"},
                 "'' is an invalid value for Version. "
                 "Error: This field is required. "
-                "see "
+                "See "
                 "https://packaging.python.org/specifications/core-metadata",
             ),
             (
@@ -823,8 +823,7 @@ class TestFileUpload:
                     "version": "1.0",
                     "filetype": "bdist_wat",
                 },
-                "Error: Python version is required for binary distribution "
-                "uploads."
+                "Error: Include Python version for binary distribution uploads"
             ),
             (
                 {
@@ -845,8 +844,7 @@ class TestFileUpload:
                     "filetype": "sdist",
                     "pyversion": "1.0",
                 },
-                "Error: The only valid Python version for a sdist is "
-                "'source'."
+                "Error: Use 'source' as Python version for an sdist"
             ),
 
             # digest errors.
@@ -883,7 +881,7 @@ class TestFileUpload:
                 },
                 "'" + "A" * 513 + "' is an invalid value for Summary. "
                 "Error: Field cannot be longer than 512 characters. "
-                "see "
+                "See "
                 "https://packaging.python.org/specifications/core-metadata",
             ),
             (
@@ -896,8 +894,8 @@ class TestFileUpload:
                     "summary": "A\nB",
                 },
                 ("{!r} is an invalid value for Summary. ".format('A\nB') +
-                 "Error: Multiple lines are not allowed. "
-                 "see "
+                 "Error: Use single line only. "
+                 "See "
                  "https://packaging.python.org/specifications/core-metadata"),
             ),
 
@@ -910,7 +908,7 @@ class TestFileUpload:
                     "filetype": "sdist",
                     "classifiers": FieldStorage(),
                 },
-                "classifiers: Should not be a tuple.",
+                "classifiers: Should not be a tuple",
             ),
 
             # keywords are a FieldStorage
@@ -922,7 +920,7 @@ class TestFileUpload:
                     "filetype": "sdist",
                     "keywords": FieldStorage(),
                 },
-                "keywords: Should not be a tuple.",
+                "keywords: Should not be a tuple",
             ),
         ],
     )
@@ -973,7 +971,7 @@ class TestFileUpload:
         ]
 
         assert resp.status_code == 400
-        assert resp.status == ("400 The name {!r} is not allowed. "
+        assert resp.status == ("400 The name {!r} isn't allowed. "
                                "See /the/help/url/ "
                                "for more information.").format(name)
 
