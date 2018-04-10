@@ -62,7 +62,7 @@ def add_classifier(request):
             break
 
     request.session.flash(
-        f"Successfully added classifier {classifier.classifier!r}",
+        f"Added classifier {classifier.classifier!r}",
         queue="success",
     )
 
