@@ -779,8 +779,8 @@ class TestFileUpload:
             (
                 {"metadata_version": "1.2", "name": "foo-"},
                 "'foo-' is an invalid value for Name. "
-                "Error: Must start and end with a letter or numeral and "
-                "contain only ascii numeric and '.', '_' and '-'. "
+                "Error: Start and end with a letter or numeral containing "
+                "only ASCII numeric and '.', '_' and '-'. "
                 "see "
                 "https://packaging.python.org/specifications/core-metadata",
             ),
@@ -800,9 +800,9 @@ class TestFileUpload:
                     "version": "dog",
                 },
                 "'dog' is an invalid value for Version. "
-                "Error: Must start and end with a letter or numeral and "
-                "contain only ascii numeric and '.', '_' and '-'. "
-                "see "
+                "Error: start and end with a letter or numeral containing "
+                "only ASCII numeric and '.', '_' and '-'. "
+                "See "
                 "https://packaging.python.org/specifications/core-metadata",
             ),
 
@@ -857,7 +857,7 @@ class TestFileUpload:
                     "version": "1.0",
                     "filetype": "sdist",
                 },
-                "Error: Must include at least one message digest."
+                "Error: Include at least one message digest"
             ),
             (
                 {
@@ -868,7 +868,7 @@ class TestFileUpload:
                     "sha256_digest": "an invalid sha256 digest",
                 },
                 "Invalid value for sha256_digest. "
-                "Error: Must be a valid, hex encoded, SHA256 message digest."
+                "Error: Use a valid, hex-encoded, SHA256 message digest"
             ),
 
             # summary errors
@@ -1951,7 +1951,7 @@ class TestFileUpload:
 
         assert resp.status_code == 400
         assert resp.status == (
-            "400 The filename for {!r} must start with {!r}.".format(
+            "400 Start the filename for {!r} with {!r}".format(
                 project.name,
                 pkg_resources.safe_name(project.name).lower(),
             )

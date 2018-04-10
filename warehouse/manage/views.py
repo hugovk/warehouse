@@ -265,7 +265,7 @@ class ManageAccountViews:
 
         if not username:
             self.request.session.flash(
-                "Must confirm the request.", queue='error'
+                "Confirm the request", queue='error'
             )
             return self.default_response
 
@@ -423,7 +423,7 @@ class ManageProjectRelease:
         version = self.request.POST.get('confirm_version')
         if not version:
             self.request.session.flash(
-                "Must confirm the request.", queue='error'
+                "Confirm the request", queue='error'
             )
             return HTTPSeeOther(
                 self.request.route_path(
@@ -490,7 +490,7 @@ class ManageProjectRelease:
         project_name = self.request.POST.get('confirm_project_name')
 
         if not project_name:
-            return _error("Must confirm the request.")
+            return _error("Confirm the request")
 
         try:
             release_file = (
