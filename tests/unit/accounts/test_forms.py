@@ -160,7 +160,7 @@ class TestRegistrationForm:
         assert not form.validate()
         assert (
             form.password_confirm.errors.pop() ==
-            "Your passwords do not match. Please try again."
+            "Your passwords don't match. Please try again."
         )
 
     def test_passwords_match_success(self):
@@ -356,7 +356,7 @@ class TestResetPasswordForm:
         assert not form.validate()
         assert (
             form.password_confirm.errors.pop() ==
-            "Your passwords do not match. Please try again."
+            "Your passwords don't match. Please try again."
         )
 
     @pytest.mark.parametrize(("password", "expected"), [
