@@ -336,7 +336,7 @@ class MetadataForm(forms.Form):
                 #       claims it is producing a Metadata 2.0 metadata when in
                 #       reality it's more like 1.2 with some extensions.
                 ["1.0", "1.1", "1.2", "2.0", "2.1"],
-                message="Unknown Metadata Version",
+                message="Unknown metadata version",
             ),
         ],
     )

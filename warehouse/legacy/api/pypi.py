@@ -66,7 +66,7 @@ def forklifted(request):
 
 @view_config(route_name="legacy.api.pypi.doap")
 def doap(request):
-    return _exc_with_message(HTTPGone, "DOAP is no longer supported.")
+    return _exc_with_message(HTTPGone, "DOAP is no longer supported")
 
 
 @forbidden_view_config(request_param=":action")

@@ -747,7 +747,7 @@ class TestFileUpload:
         resp = excinfo.value
 
         assert resp.status_code == 400
-        assert resp.status == "400 Unknown protocol version."
+        assert resp.status == "400 Unknown protocol version"
 
     @pytest.mark.parametrize(
         ("post_data", "message"),
@@ -763,7 +763,7 @@ class TestFileUpload:
             (
                 {"metadata_version": "-1"},
                 "'-1' is an invalid value for Metadata-Version. "
-                "Error: Unknown Metadata Version "
+                "Error: Unknown metadata version. "
                 "See "
                 "https://packaging.python.org/specifications/core-metadata",
             ),
