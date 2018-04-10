@@ -835,7 +835,7 @@ class TestFileUpload:
                     "pyversion": "1.0",
                     "md5_digest": "bad",
                 },
-                "Invalid value for filetype. Error: Unknown type of file.",
+                "Invalid value for filetype. Error: Unknown type of file",
             ),
             (
                 {
@@ -1337,7 +1337,7 @@ class TestFileUpload:
         resp = excinfo.value
 
         assert resp.status_code == 400
-        assert resp.status == "400 Invalid distribution file."
+        assert resp.status == "400 Invalid distribution file"
 
     def test_upload_fails_with_legacy_type(self, pyramid_config, db_request):
         pyramid_config.testing_securitypolicy(userid=1)
@@ -1370,7 +1370,7 @@ class TestFileUpload:
         resp = excinfo.value
 
         assert resp.status_code == 400
-        assert resp.status == "400 Unknown type of file."
+        assert resp.status == "400 Unknown type of file"
 
     def test_upload_fails_with_legacy_ext(self, pyramid_config, db_request):
         pyramid_config.testing_securitypolicy(userid=1)
@@ -1442,7 +1442,7 @@ class TestFileUpload:
         resp = excinfo.value
 
         assert resp.status_code == 400
-        assert resp.status == "400 Only one sdist may be uploaded per release."
+        assert resp.status == "400 Only one sdist may be uploaded per release"
 
     @pytest.mark.parametrize("sig", [b"lol nope"])
     def test_upload_fails_with_invalid_signature(self, pyramid_config,
@@ -1480,7 +1480,7 @@ class TestFileUpload:
         resp = excinfo.value
 
         assert resp.status_code == 400
-        assert resp.status == "400 PGP signature is not ASCII armored."
+        assert resp.status == "400 PGP signature is not ASCII armored"
 
     def test_upload_fails_with_invalid_classifier(self, pyramid_config,
                                                   db_request):
@@ -1587,7 +1587,7 @@ class TestFileUpload:
 
         assert resp.status_code == 400
         assert resp.status == (
-            "400 The digest supplied does not match a digest calculated "
+            "400 The digest doesn't match a digest calculated "
             "from the uploaded file."
         )
 
@@ -1621,7 +1621,7 @@ class TestFileUpload:
         resp = excinfo.value
 
         assert resp.status_code == 400
-        assert resp.status == "400 Invalid distribution file."
+        assert resp.status == "400 Invalid distribution file"
 
     def test_upload_fails_with_too_large_file(self, pyramid_config,
                                               db_request):
@@ -1631,7 +1631,7 @@ class TestFileUpload:
         EmailFactory.create(user=user)
         project = ProjectFactory.create(
             name='foobar',
-            upload_limit=(60 * 1024 * 1024),  # 60MB
+            upload_limit=(60 * 1024 * 1024),  # 60 MB
         )
         release = ReleaseFactory.create(project=project, version="1.0")
         RoleFactory.create(user=user, project=project)
