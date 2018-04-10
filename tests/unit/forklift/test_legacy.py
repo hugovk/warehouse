@@ -1403,8 +1403,8 @@ class TestFileUpload:
 
         assert resp.status_code == 400
         assert resp.status == (
-            "400 Invalid file extension. PEP 527 requires one of: .egg, "
-            ".tar.gz, .whl, .zip (https://www.python.org/dev/peps/pep-0527/)."
+            "400 Invalid file extension: use .egg, .tar.gz, .whl or .zip "
+            "extension (PEP 527: https://www.python.org/dev/peps/pep-0527/)"
         )
 
     def test_upload_fails_for_second_sdist(self, pyramid_config, db_request):
@@ -2029,7 +2029,7 @@ class TestFileUpload:
 
         assert resp.status_code == 400
         assert resp.status == \
-            "400 Cannot upload a file with '/' or '\\' in the name."
+            "400 Cannot upload a file with '/' or '\\' in the name"
 
     def test_upload_fails_without_permission(self, pyramid_config, db_request):
         pyramid_config.testing_securitypolicy(userid=1, permissive=False)
@@ -2072,7 +2072,7 @@ class TestFileUpload:
         ]
         assert resp.status_code == 403
         assert resp.status == (
-            "403 The user '{0}' is not allowed to upload to project '{1}'. "
+            "403 The user '{0}' isn't allowed to upload to project '{1}'. "
             "See /the/help/url/ for more information.").format(
             user2.username,
             project.name)
@@ -2838,7 +2838,7 @@ class TestFileUpload:
 
         assert resp.status_code == 403
         assert resp.status == (
-            '403 Read Only Mode: Uploads are temporarily disabled'
+            '403 Read-only mode: uploads are temporarily disabled'
         )
 
     def test_fails_without_user(self, pyramid_config, pyramid_request):
@@ -2852,7 +2852,7 @@ class TestFileUpload:
 
         assert resp.status_code == 403
         assert resp.status == (
-            "403 Invalid or non-existent authentication information."
+            "403 Invalid or non-existent authentication information"
         )
 
     def test_autohides_old_releases(self, pyramid_config, db_request):
@@ -3030,8 +3030,8 @@ def test_submit(pyramid_request):
 
     assert resp.status_code == 410
     assert resp.status == \
-        ("410 Project pre-registration is no longer required or supported, so "
-         "continue directly to uploading files")
+        ("410 Project pre-registration is no longer required or supported, "
+         "please upload your files")
 
 
 def test_doc_upload(pyramid_request):

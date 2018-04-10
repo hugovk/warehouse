@@ -708,7 +708,7 @@ def file_upload(request):
     if request.flags.enabled('read-only'):
         raise _exc_with_message(
             HTTPForbidden,
-            'Read-only mode: Uploads are temporarily disabled',
+            'Read-only mode: uploads are temporarily disabled',
         )
 
     # Before we do anything, if there isn't an authenticated user with this
@@ -1018,8 +1018,8 @@ def file_upload(request):
     if _dist_file_regexes[project.allow_legacy_files].search(filename) is None:
         raise _exc_with_message(
             HTTPBadRequest,
-            "Use a .egg, .tar.gz, .whl or .zip extension "
-            "(PEP 527: https://www.python.org/dev/peps/pep-0527/)"
+            "400 Invalid file extension: Use .egg, .tar.gz, .whl or .zip "
+            "extension (PEP 527: https://www.python.org/dev/peps/pep-0527/)"
         )
 
     # Make sure that our filename matches the project that it is being uploaded
