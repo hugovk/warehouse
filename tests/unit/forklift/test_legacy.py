@@ -1053,10 +1053,10 @@ class TestFileUpload:
         resp = excinfo.value
 
         assert resp.status_code == 403
-        assert resp.status == ("403 New Project Registration Temporarily "
-                               "Disabled See "
+        assert resp.status == ("403 New project registration temporarily "
+                               "disabled. See "
                                "/the/help/url/ for "
-                               "details")
+                               "details.")
 
     def test_upload_fails_without_file(self, pyramid_config, db_request):
         pyramid_config.testing_securitypolicy(userid=1)

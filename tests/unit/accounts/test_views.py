@@ -740,13 +740,13 @@ class TestResetPassword:
         [
             (
                 TokenInvalid,
-                "Invalid token - Request a new password reset link",
+                "Invalid token: request a new password reset link",
             ), (
                 TokenExpired,
-                "Expired token - Request a new password reset link",
+                "Expired token: request a new password reset link",
             ), (
                 TokenMissing,
-                "Invalid token - No token supplied"
+                "Invalid token: no token supplied"
             ),
         ],
     )
@@ -799,7 +799,7 @@ class TestResetPassword:
         ]
         assert pyramid_request.session.flash.calls == [
             pretend.call(
-                "Invalid token - Not a password reset token", queue='error'
+                "Invalid token: not a password reset token", queue='error'
             ),
         ]
 
@@ -831,7 +831,7 @@ class TestResetPassword:
         ]
         assert pyramid_request.session.flash.calls == [
             pretend.call(
-                "Invalid token - User not found", queue='error'
+                "Invalid token: user not found", queue='error'
             ),
         ]
         assert user_service.get_user.calls == [
@@ -870,7 +870,7 @@ class TestResetPassword:
         ]
         assert pyramid_request.session.flash.calls == [
             pretend.call(
-                "Invalid token - User has logged in since this token was "
+                "Invalid token: user has logged in since this token was "
                 "requested",
                 queue='error',
             ),
@@ -909,7 +909,7 @@ class TestResetPassword:
         ]
         assert pyramid_request.session.flash.calls == [
             pretend.call(
-                "Invalid token - Password has already been changed since this "
+                "Invalid token: password has already been changed since this "
                 "token was requested",
                 queue='error',
             ),
@@ -971,13 +971,13 @@ class TestVerifyEmail:
         [
             (
                 TokenInvalid,
-                "Invalid token - Request a new verification link",
+                "Invalid token: request a new verification link",
             ), (
                 TokenExpired,
-                "Expired token - Request a new verification link",
+                "Expired token: request a new verification link",
             ), (
                 TokenMissing,
-                "Invalid token - No token supplied"
+                "Invalid token: no token supplied"
             ),
         ],
     )
@@ -1025,7 +1025,7 @@ class TestVerifyEmail:
         ]
         assert pyramid_request.session.flash.calls == [
             pretend.call(
-                "Invalid token - Not an email verification token",
+                "Invalid token: not an email verification token",
                 queue='error',
             ),
         ]

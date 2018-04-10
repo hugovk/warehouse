@@ -484,7 +484,7 @@ class MetadataForm(forms.Form):
             wtforms.validators.Regexp(
                 r"^[A-F0-9]{64}$",
                 re.IGNORECASE,
-                message="Use be a valid, hex-encoded, SHA256 message digest",
+                message="Use a valid, hex-encoded, SHA256 message digest",
             ),
         ],
     )
@@ -494,7 +494,7 @@ class MetadataForm(forms.Form):
             wtforms.validators.Regexp(
                 r"^[A-F0-9]{64}$",
                 re.IGNORECASE,
-                message="Use be a valid, hex-encoded, BLAKE2 message digest",
+                message="Use a valid, hex-encoded, BLAKE2 message digest",
             ),
         ],
     )
