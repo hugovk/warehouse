@@ -1403,8 +1403,8 @@ class TestFileUpload:
 
         assert resp.status_code == 400
         assert resp.status == (
-            "400 Invalid file extension: use .egg, .tar.gz, .whl or .zip "
-            "extension (PEP 527: https://www.python.org/dev/peps/pep-0527/)"
+            "400 Invalid file extension. Use .egg, .tar.gz, .whl or .zip "
+            "extension (PEP 527 https://www.python.org/dev/peps/pep-0527/)"
         )
 
     def test_upload_fails_for_second_sdist(self, pyramid_config, db_request):
@@ -1664,7 +1664,7 @@ class TestFileUpload:
         ]
         assert resp.status_code == 400
         assert resp.status == (
-            "400 File too large. Limit for project 'foobar' is 60MB. "
+            "400 File too large. Limit for project 'foobar' is 60 MB. "
             "See /the/help/url/"
         )
 
@@ -1703,7 +1703,7 @@ class TestFileUpload:
         resp = excinfo.value
 
         assert resp.status_code == 400
-        assert resp.status == "400 Signature too large."
+        assert resp.status == "400 Signature too large"
 
     def test_upload_fails_with_previously_used_filename(self, pyramid_config,
                                                         db_request):
@@ -1746,7 +1746,7 @@ class TestFileUpload:
         ]
         assert resp.status_code == 400
         assert resp.status == (
-            "400 This filename has previously been used, you should use a "
+            "400 This filename has already been used, use a "
             "different version. "
             "See /the/help/url/"
         )
@@ -1951,7 +1951,7 @@ class TestFileUpload:
 
         assert resp.status_code == 400
         assert resp.status == (
-            "400 Start the filename for {!r} with {!r}".format(
+            "400 Start filename for {!r} with {!r}".format(
                 project.name,
                 pkg_resources.safe_name(project.name).lower(),
             )
@@ -1989,8 +1989,8 @@ class TestFileUpload:
 
         assert resp.status_code == 400
         assert resp.status == (
-            "400 Invalid file extension. PEP 527 requires one of: .egg, "
-            ".tar.gz, .whl, .zip (https://www.python.org/dev/peps/pep-0527/)."
+            "400 Invalid file extension. Use .egg, .tar.gz, .whl or .zip "
+            "extension (PEP 527 https://www.python.org/dev/peps/pep-0527/)"
         )
 
     @pytest.mark.parametrize("character", ["/", "\\"])
