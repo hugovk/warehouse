@@ -1017,7 +1017,7 @@ class TestFileUpload:
         ]
 
         assert resp.status_code == 400
-        assert resp.status == (("400 The name {!r} is not allowed (conflict "
+        assert resp.status == (("400 The name {!r} isn't allowed (conflict "
                                 "with Python Standard Library module name). "
                                 "See /the/help/url/ "
                                 "for more information.")).format(name)
@@ -1074,7 +1074,7 @@ class TestFileUpload:
         resp = excinfo.value
 
         assert resp.status_code == 400
-        assert resp.status == "400 Upload payload does not have a file."
+        assert resp.status == "400 Upload payload does not have a file"
 
     @pytest.mark.parametrize("value", [('UNKNOWN'), ('UNKNOWN\n\n')])
     def test_upload_cleans_unknown_values(
