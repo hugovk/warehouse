@@ -38,6 +38,11 @@ def test_can_render_markdown():
     assert result == "<p>raw thing</p>\n"
 
 
+def test_can_render_markdown_with_html():
+    result = readme.render("<p>para thing</p>", "text/markdown")
+    assert result == "<p>para thing</p>\n"
+
+
 def test_can_render_missing_content_type():
     result = readme.render("raw thing")
     assert result == "<p>raw thing</p>\n"
