@@ -27,7 +27,7 @@ within a project in an organization account.
 
 #### Transfer a project
 
-*Actor: Owner*
+*Actor: Manager*
 
 * Click on **Your organizations**
 * Click on **Manage** for a specific organization
