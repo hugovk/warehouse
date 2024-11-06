@@ -31,26 +31,26 @@ assign roles to members, assign  permissions to a team,
 manage projects and billing.
 
 * **Manager**: A manager can manage a team, assign permissions for a
-team and manage a project
+team and manage a project.
 
 * **Member**: A member can manage projects. By default, all users in an
 organization are members  of the organization.
 
 * **Billing manager**: A billing manager can manage billing details,
 download invoices/receipts,
-renew and cancel subscriptions for an organization
+renew and cancel subscriptions for an organization.
 
 ### Project roles
 
 A team or individual user can manage a project as a collaborator.
 
 * **Maintainer**: A collaborator assigned this role can
-upload releases for a project
+upload releases for a project.
 
 * **Owner**: A collaborator assigned this role can manage
-the project and collaborators for the project
+the project and collaborators for the project.
 
-This table summarizes the roles and perimissions within an organization.
+This table summarizes the roles and permissions within an organization.
 
 | Action | Member | Manager | Owner | Billing Manager |
 | ---------------------------------- | ------ | ------ | ------ | ------ |
